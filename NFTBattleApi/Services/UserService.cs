@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using NFTBattleApi.Models;
 using NFTBattleApi.Models.Settings;
@@ -16,10 +17,23 @@ namespace NFTBattleApi.Services
             _user = database.GetCollection<User>("User");
         }
 
-        public List<User> GetUsers()
+        public User GetUser(string Id)
         {
-            var users = _user.Find(user => true).ToList();
-            return users;
+            var user = _user.Find(user => user.Id == Id).FirstOrDefault();
+            return user;
+        }
+
+        public User CreateUser(string Name, string Password, string WalletId)
+        {
+            var user = new User()
+            {
+                Id = ObjectId.GenerateNewId().ToString(),
+                Name = Name,
+                Password = Password,
+                WalletId = WalletId
+            };
+            _user.InsertOne(user);
+            return user;
         }
     }
 }
