@@ -1,4 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NFTBattleApi.Models;
 using NFTBattleApi.Services;
 
@@ -16,6 +22,7 @@ namespace NFTBattleApi.Controllers
             _userService = userService;
         }
 
+        [Authorize]
         [HttpGet]
         [Route("{id}")]
         public ActionResult Get(string id)
@@ -38,6 +45,7 @@ namespace NFTBattleApi.Controllers
 
         /// <response code="201">Usuário criado</response>
         /// <response code="400">Faltando parâmetros</response>
+        [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -17,6 +17,12 @@ namespace NFTBattleApi.Services
             _user = database.GetCollection<User>("User");
         }
 
+        public User Login(string Name, string Password)
+        {
+            var user = _user.Find(u => u.Name == Name && u.Password == Password).FirstOrDefault();
+            return user;
+        }
+
         public User GetUser(string Id)
         {
             var user = _user.Find(user => user.Id == Id).FirstOrDefault();
