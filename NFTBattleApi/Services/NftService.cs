@@ -18,6 +18,13 @@ namespace NFTBattleApi.Services
             _nft = database.GetCollection<Nft>("Nft");
         }
 
+        public Nft GetNft(string id)
+        {
+            var nft = _nft.Find(n => n.Id == id).FirstOrDefault();
+            if(nft is null) throw new Exception("NFT não encontrado");
+            return nft;
+        }
+        
         public Nft CreateNft(string name, string type, int health, int attack, int defence)
         {
             var nft = new Nft()
@@ -35,20 +42,10 @@ namespace NFTBattleApi.Services
             return nft;
         }
 
-        public Nft UpdateNft(string id, string name, string type, int health, int attack, int defence, string? idOwner)
+        public Nft UpdateNft(Nft nft)
         {
-            var nft = _nft.Find(n => n.Id == id).FirstOrDefault();
-
             if (nft is null) throw new Exception("NFT não encontrado!");
-            nft.Id = id;
-            nft.Name = name;
-            nft.Type = type;
-            nft.Health = health;
-            nft.Attack = attack;
-            nft.Defence = defence;
-            nft.IdOwner = idOwner;
-            
-            _nft.ReplaceOne(n => n.Id == id, nft);
+            _nft.ReplaceOne(n => n.Id == nft.Id, nft);
             return nft;
         }
     }

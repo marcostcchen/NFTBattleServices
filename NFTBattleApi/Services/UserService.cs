@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -26,6 +27,7 @@ namespace NFTBattleApi.Services
         public User GetUser(string Id)
         {
             var user = _user.Find(user => user.Id == Id).FirstOrDefault();
+            user.Password = null;
             return user;
         }
 
@@ -39,6 +41,13 @@ namespace NFTBattleApi.Services
                 WalletId = WalletId
             };
             _user.InsertOne(user);
+            return user;
+        }
+
+        public User UpdateUser(User user)
+        {
+            if (user is null) throw new Exception("Usuário está vazio!");
+            _user.ReplaceOne(u => u.Id == user.Id, user);
             return user;
         }
     }

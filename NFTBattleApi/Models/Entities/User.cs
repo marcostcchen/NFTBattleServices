@@ -12,6 +12,6 @@ namespace NFTBattleApi.Models
         public string Name { get; set; }
         public string? Password { get; set; }
         public string WalletId { get; set; }
-        public IEnumerable<Nft> Nfts { get; set; }
+        public IEnumerable<Nft>? Nfts { get; set; }
     }
 }

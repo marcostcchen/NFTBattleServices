@@ -29,7 +29,6 @@ namespace NFTBattleApi.Controllers
                 var user = _userService.GetUser(id);
                 if (user == null) return Ok(new { StatusCode = 200, Message = "Usu�rio n�o encontrado!" });
 
-                user.Password = null;
                 return Ok(user);
             }
             catch (Exception ex)
@@ -55,7 +54,6 @@ namespace NFTBattleApi.Controllers
                 if (request.WalletId is null) throw new Exception("Campo WalletId est� vazio!");
 
                 var user = _userService.CreateUser(request.Name, request.Password, request.WalletId);
-                user.Password = null;
                 return Created("/User", user);
             }
             catch (Exception ex)

@@ -50,9 +50,8 @@ namespace NFTBattleApi.Controllers
                 if (request.Health is null) throw new Exception("Campo Health est� vazio!");
                 if (request.Attack is null) throw new Exception("Campo Attack est� vazio!");
                 if (request.Defence is null) throw new Exception("Campo Defence est� vazio!");
-
-                var nft = _nftService.UpdateNft(request.Id,request.Name, request.Type, (int) request.Health, (int) request.Attack,
-                    (int) request.Defence, request.IdOwner);
+                
+                var nft = _nftService.UpdateNft(request);
                 return Ok(nft);
             }
             catch (Exception ex)
