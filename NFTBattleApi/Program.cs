@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Models;
 using NFTBattleApi.Models;
 using NFTBattleApi.Models.Settings;
 using NFTBattleApi.Services;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,9 +16,21 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "NFT Battle API",
+        Description = "Trabalho de Sistemas Interativos da Escola Politécnica de São Paulo",
+        Contact = new OpenApiContact
+        {
+            Name = "Github",
+            Url = new Uri("https://github.com/marcostcchen/NFTBattleServices")
+        },
+    });
+
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = @"Autorização Bearer. Insira 'Bearer' [espaço] em seguida oo token de acesso. Exemplo: 'Bearer 12345abcdef'",
+        Description = @"Autorização Bearer. Insira 'Bearer' [espaço] em seguida o token de acesso. Exemplo: 'Bearer 12345abcdef'",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
@@ -37,6 +50,7 @@ builder.Services.AddSwaggerGen(c =>
         openApiSecurityScheme,
         new List<string>()
     } });
+
 });
 
 builder.Services.Configure<MongoCollectionSettings>(builder.Configuration.GetSection(nameof(MongoCollectionSettings)));

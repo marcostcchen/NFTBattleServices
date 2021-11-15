@@ -22,7 +22,7 @@ namespace NFTBattleApi.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Post(LoginRequest request)
+        public ActionResult<User> Post(LoginRequest request)
         {
             var user = _userService.Login(request.Name, request.Password);
             if (user == null) return Ok(new { Message = "Usuário não encontrado!" });

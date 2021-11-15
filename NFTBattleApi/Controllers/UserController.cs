@@ -25,7 +25,7 @@ namespace NFTBattleApi.Controllers
         [Authorize]
         [HttpGet]
         [Route("{id}")]
-        public ActionResult Get(string id)
+        public ActionResult<User> Get(string id)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace NFTBattleApi.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult Post(CreateUserRequest request)
+        public ActionResult<User> Post(CreateUserRequest request)
         {
             try
             {
