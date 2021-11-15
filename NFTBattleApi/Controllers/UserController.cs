@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using NFTBattleApi.Models;
 using NFTBattleApi.Services;
 
@@ -30,7 +27,7 @@ namespace NFTBattleApi.Controllers
             try
             {
                 var user = _userService.GetUser(id);
-                if (user == null) return Ok(new { StatusCode = 200, Message = "Usuário não encontrado!" });
+                if (user == null) return Ok(new { StatusCode = 200, Message = "Usuï¿½rio nï¿½o encontrado!" });
 
                 user.Password = null;
                 return Ok(user);
@@ -43,8 +40,8 @@ namespace NFTBattleApi.Controllers
         }
 
 
-        /// <response code="201">Usuário criado</response>
-        /// <response code="400">Faltando parâmetros</response>
+        /// <response code="201">Usuï¿½rio criado</response>
+        /// <response code="400">Faltando parï¿½metros</response>
         [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -53,9 +50,9 @@ namespace NFTBattleApi.Controllers
         {
             try
             {
-                if (request.Name is null) throw new Exception("Campo Name está vazio!");
-                if (request.Password is null) throw new Exception("Campo Password está vazio!");
-                if (request.WalletId is null) throw new Exception("Campo WalletId está vazio!");
+                if (request.Name is null) throw new Exception("Campo Name estï¿½ vazio!");
+                if (request.Password is null) throw new Exception("Campo Password estï¿½ vazio!");
+                if (request.WalletId is null) throw new Exception("Campo WalletId estï¿½ vazio!");
 
                 var user = _userService.CreateUser(request.Name, request.Password, request.WalletId);
                 user.Password = null;

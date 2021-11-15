@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -7,11 +9,16 @@ using NFTBattleApi.Models.Settings;
 using NFTBattleApi.Services;
 using System.Reflection;
 using System.Text;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+builder.Services.Configure<RouteOptions>(options => options.LowercaseUrls = true);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -20,7 +27,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Version = "v1",
         Title = "NFT Battle API",
-        Description = "Trabalho de Sistemas Interativos da Escola Politécnica de São Paulo",
+        Description = "Trabalho de Sistemas Interativos da Escola Politï¿½cnica de Sï¿½o Paulo",
         Contact = new OpenApiContact
         {
             Name = "Github",
@@ -30,7 +37,7 @@ builder.Services.AddSwaggerGen(c =>
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = @"Autorização Bearer. Insira 'Bearer' [espaço] em seguida o token de acesso. Exemplo: 'Bearer 12345abcdef'",
+        Description = @"Autorizaï¿½ï¿½o Bearer. Insira 'Bearer' [espaï¿½o] em seguida o token de acesso. Exemplo: 'Bearer 12345abcdef'",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
@@ -61,6 +68,7 @@ builder.Services.AddSingleton<ITokenSettings>(sp => sp.GetRequiredService<IOptio
 
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<TokenService>();
+builder.Services.AddSingleton<NftService>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
