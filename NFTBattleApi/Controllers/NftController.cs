@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NFTBattleApi.Models;
@@ -18,8 +20,16 @@ namespace NFTBattleApi.Controllers
             _nftService = nftService;
         }
 
+        [Authorize]
+        [HttpGet]
+        public ActionResult<IEnumerable<Nft>> Get()
+        {
+            var nfts = _nftService.GetAllNft();
+            return Ok(nfts);
+        }
+
         [HttpPost]
-        public ActionResult<Nft> Post(Nft request)
+        public ActionResult<Nft> Post(NftRequest request)
         {
             try
             {
@@ -38,7 +48,7 @@ namespace NFTBattleApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [HttpPut]
         public ActionResult<Nft> Put(Nft request)
         {
@@ -50,7 +60,7 @@ namespace NFTBattleApi.Controllers
                 if (request.Health is null) throw new Exception("Campo Health est� vazio!");
                 if (request.Attack is null) throw new Exception("Campo Attack est� vazio!");
                 if (request.Defence is null) throw new Exception("Campo Defence est� vazio!");
-                
+
                 var nft = _nftService.UpdateNft(request);
                 return Ok(nft);
             }

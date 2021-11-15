@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Driver;
@@ -24,6 +25,13 @@ namespace NFTBattleApi.Services
             if(nft is null) throw new Exception("NFT não encontrado");
             return nft;
         }
+        
+        public IEnumerable<Nft> GetAllNft()
+        {
+            var nfts = _nft.Find(n => true).ToList() ?? new List<Nft>();
+            return nfts;
+        }
+
         
         public Nft CreateNft(string name, string type, int health, int attack, int defence)
         {
