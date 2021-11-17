@@ -1,6 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NFTBattleApi", "NFTBattleApi.csproj", "{34556335-982C-4703-8139-FEDE1E7FD504}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFTBattleApi", "NFTBattleApi.csproj", "{34556335-982C-4703-8139-FEDE1E7FD504}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFTBattleApi.Tests", "..\NFTBattleApi.Tests\NFTBattleApi.Tests.csproj", "{2AF46B38-7592-49AE-B5A0-66D9DAC78BCD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +17,15 @@ Global
 		{34556335-982C-4703-8139-FEDE1E7FD504}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34556335-982C-4703-8139-FEDE1E7FD504}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34556335-982C-4703-8139-FEDE1E7FD504}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2AF46B38-7592-49AE-B5A0-66D9DAC78BCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2AF46B38-7592-49AE-B5A0-66D9DAC78BCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2AF46B38-7592-49AE-B5A0-66D9DAC78BCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2AF46B38-7592-49AE-B5A0-66D9DAC78BCD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {04724D1D-877A-417E-BF22-BD5E0BEAAF2D}
 	EndGlobalSection
 EndGlobal

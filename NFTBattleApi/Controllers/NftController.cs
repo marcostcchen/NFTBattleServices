@@ -20,7 +20,7 @@ namespace NFTBattleApi.Controllers
             _nftService = nftService;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<Nft>> Get()
         {
