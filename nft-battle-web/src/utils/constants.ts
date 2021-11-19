@@ -1,0 +1,1 @@
+export const urlApi = "https://nftbattleapi.beacontracker.software";
