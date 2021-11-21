@@ -10,7 +10,6 @@ namespace NFTBattleApi.Controllers
     [Produces("application/json")]
     public class LoginController : ControllerBase
     {
-
         private readonly UserService _userService;
         private readonly TokenService _tokenService;
 
@@ -25,7 +24,7 @@ namespace NFTBattleApi.Controllers
         public ActionResult<User> Post(LoginRequest request)
         {
             var user = _userService.Login(request.Name, request.Password);
-            if (user == null) return Ok(new { Message = "Usuário não encontrado!" });
+            if (user is null) return BadRequest("Usuário não encontrado!");
 
             user.Password = null;
 

@@ -10,12 +10,12 @@ namespace NFTBattleApi.Controllers
     [ApiController]
     [Route("[controller]")]
     [Produces("application/json")]
-    public class ShoppingController : ControllerBase
+    public class UserNftController : ControllerBase
     {
         private readonly NftService _nftService;
         private readonly UserService _userService;
 
-        public ShoppingController(NftService nftService, UserService userService)
+        public UserNftController(NftService nftService, UserService userService)
         {
             _nftService = nftService;
             _userService = userService;
@@ -27,8 +27,8 @@ namespace NFTBattleApi.Controllers
         {
             try
             {
-                if (request.IdUser is null) throw new Exception("Campo IdUser est� vazio!");
-                if (request.IdNft is null) throw new Exception("Campo IdNft est� vazio!");
+                if (request.IdUser is null) throw new Exception("Campo IdUser está vazio!");
+                if (request.IdNft is null) throw new Exception("Campo IdNft está vazio!");
 
                 var user = _userService.GetUser(request.IdUser);
                 var nft = _nftService.GetNft(request.IdNft);

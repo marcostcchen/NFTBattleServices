@@ -1,10 +1,7 @@
 import { useState } from 'react';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,15 +9,27 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import icon from '../images/icon.png'
+import { login } from '../services/api';
+import { Snackbar } from '@mui/material';
 
 const theme = createTheme();
 
 export function SignIn() {
-  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = () => {
-    
+  const [isOpenSnackBar, setIsOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("")
+
+  const handleSubmit = async () => {
+    try {
+      const user = await login(name, password);
+
+    } catch (errorMessage: any) {
+      setSnackbarMessage(errorMessage)
+      setIsOpenSnackbar(true)
+    }
+
   };
 
   return (
@@ -36,12 +45,9 @@ export function SignIn() {
             <TextField
               margin="normal"
               required
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event) => setName(event.target.value)}
               fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
+              label="Nome"
               autoFocus
             />
             <TextField
@@ -49,14 +55,12 @@ export function SignIn() {
               required
               onChange={(event) => setPassword(event.target.value)}
               fullWidth
-              name="password"
               label="Senha"
               type="password"
-              id="password"
               autoComplete="current-password"
             />
 
-            <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleSubmit}>
+            <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleSubmit}>
               Entrar
             </Button>
             <Grid container justifyContent="flex-end">
@@ -68,6 +72,13 @@ export function SignIn() {
             </Grid>
           </Box>
         </Box>
+
+        <Snackbar
+          open={isOpenSnackBar}
+          autoHideDuration={6000}
+          onClose={() => setIsOpenSnackbar(false)}
+          message={snackbarMessage}
+        />
       </Container>
     </ThemeProvider>
   );

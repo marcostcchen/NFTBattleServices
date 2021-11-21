@@ -7,7 +7,6 @@ using Microsoft.OpenApi.Models;
 using NFTBattleApi.Models;
 using NFTBattleApi.Models.Settings;
 using NFTBattleApi.Services;
-using System.Reflection;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
@@ -37,7 +36,8 @@ builder.Services.AddSwaggerGen(c =>
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = @"Autoriza��o Bearer. Insira 'Bearer' [espa�o] em seguida o token de acesso. Exemplo: 'Bearer 12345abcdef'",
+        Description =
+            @"Autoriza��o Bearer. Insira 'Bearer' [espa�o] em seguida o token de acesso. Exemplo: 'Bearer 12345abcdef'",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
@@ -46,30 +46,35 @@ builder.Services.AddSwaggerGen(c =>
 
     var openApiSecurityScheme = new OpenApiSecurityScheme
     {
-        Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" },
+        Reference = new OpenApiReference {Type = ReferenceType.SecurityScheme, Id = "Bearer"},
         Scheme = "oauth2",
         Name = "Bearer",
         In = ParameterLocation.Header
     };
 
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement {
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
-        openApiSecurityScheme,
-        new List<string>()
-    } });
-
+        {
+            openApiSecurityScheme,
+            new List<string>()
+        }
+    });
 });
+builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+{
+    builder.AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+}));
 
 builder.Services.Configure<MongoCollectionSettings>(builder.Configuration.GetSection(nameof(MongoCollectionSettings)));
-builder.Services.AddSingleton<IMongoCollectionSettings>(sp => sp.GetRequiredService<IOptions<MongoCollectionSettings>>().Value);
-
+builder.Services.AddSingleton<IMongoCollectionSettings>(sp =>
+    sp.GetRequiredService<IOptions<MongoCollectionSettings>>().Value);
 builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection(nameof(TokenSettings)));
 builder.Services.AddSingleton<ITokenSettings>(sp => sp.GetRequiredService<IOptions<TokenSettings>>().Value);
-
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<TokenService>();
 builder.Services.AddSingleton<NftService>();
-
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
 {
@@ -81,10 +86,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["TokenSettings:JwtIssuer"],
         ValidAudience = builder.Configuration["TokenSettings:JwtIssuer"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenSettings:JwtKey"]))
+        IssuerSigningKey =
+            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenSettings:JwtKey"]))
     };
 });
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -98,6 +103,7 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     });
 }
 
+app.UseCors("MyPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
