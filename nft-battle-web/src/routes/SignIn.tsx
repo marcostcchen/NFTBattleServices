@@ -11,6 +11,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import icon from '../images/icon.png'
 import { login } from '../services/api';
 import { Snackbar } from '@mui/material';
+import { TokenConstant, UserConstant } from '../utils';
+import { useNavigate } from 'react-router';
 
 const theme = createTheme();
 
@@ -21,15 +23,18 @@ export function SignIn() {
   const [isOpenSnackBar, setIsOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("")
 
+  const navigate = useNavigate();
+
   const handleSubmit = async () => {
     try {
-      const user = await login(name, password);
-
+      const res = await login(name, password);
+      localStorage.setItem(UserConstant, JSON.stringify(res.user))
+      localStorage.setItem(TokenConstant, `${res.type} ${res.token}`)
+      navigate('shopping')
     } catch (errorMessage: any) {
       setSnackbarMessage(errorMessage)
       setIsOpenSnackbar(true)
     }
-
   };
 
   return (

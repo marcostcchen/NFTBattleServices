@@ -6,4 +6,5 @@ export interface Nft {
     Attack: number,
     Defence: number,
     IdOwner: string,
+    ImageUrl: string
 }

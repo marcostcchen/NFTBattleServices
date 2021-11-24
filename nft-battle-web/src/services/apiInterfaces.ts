@@ -1,7 +1,7 @@
-export interface IBaseRes {
+import { User } from "../models";
 
-}
-
-export interface IRes extends IBaseRes {
-  
+export interface ILoginRes {
+  token: string,
+  type: string,
+  user: User,
 }

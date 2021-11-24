@@ -30,6 +30,9 @@ export function SignUp() {
       const user = await createUser(name.trim().toLocaleLowerCase(), password.trim().toLocaleLowerCase(), walletId.trim().toLocaleLowerCase());
       setSnackbarMessage("Usuário cadastrado com sucesso!");
       setIsOpenSnackbar(true);
+      setTimeout(() => {
+        navigate('/');
+      }, 2000)
     } catch (errorMessage: any) {
       setSnackbarMessage(errorMessage)
       setIsOpenSnackbar(true)
