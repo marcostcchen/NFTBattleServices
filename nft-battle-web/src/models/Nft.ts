@@ -1,10 +1,10 @@
 export interface Nft {
-    Id: string,
-    Name: string,
-    Type: string,
-    Health: number,
-    Attack: number,
-    Defence: number,
-    IdOwner: string,
-    ImageUrl: string
+    id: string,
+    name: string,
+    type: string,
+    health: number,
+    attack: number,
+    defence: number,
+    idOwner: string,
+    imageUrl: string
 }

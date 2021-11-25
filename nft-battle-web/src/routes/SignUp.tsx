@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from 'react';
-import { Snackbar } from '@mui/material';
+import { CircularProgress, Snackbar } from '@mui/material';
 import { createUser } from '../services/api';
 import { useNavigate } from "react-router-dom";
 
@@ -24,18 +24,23 @@ export function SignUp() {
   const [isOpenSnackBar, setIsOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("")
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
   const handleSubmit = async () => {
     try {
+      setIsLoading(true)
       const user = await createUser(name.trim().toLocaleLowerCase(), password.trim().toLocaleLowerCase(), walletId.trim().toLocaleLowerCase());
       setSnackbarMessage("Usuário cadastrado com sucesso!");
       setIsOpenSnackbar(true);
       setTimeout(() => {
         navigate('/');
+        setIsLoading(false)
       }, 2000)
     } catch (errorMessage: any) {
       setSnackbarMessage(errorMessage)
       setIsOpenSnackbar(true)
+      setIsLoading(false)
     }
 
   };
@@ -90,10 +95,18 @@ export function SignUp() {
             <Button
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              style={{height: 50}}
+              sx={{ mt: 3, mb: 2,  }}
               onClick={handleSubmit}
             >
-              Cadastrar
+              {isLoading && (
+                <CircularProgress color="warning"/>
+              )}
+              {!isLoading && (
+                <>
+                  Cadastrar
+                </>
+              )}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>

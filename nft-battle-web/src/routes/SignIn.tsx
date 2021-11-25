@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import icon from '../images/icon.png'
 import { login } from '../services/api';
-import { Snackbar } from '@mui/material';
+import { CircularProgress, Snackbar } from '@mui/material';
 import { TokenConstant, UserConstant } from '../utils';
 import { useNavigate } from 'react-router';
 
@@ -23,17 +23,22 @@ export function SignIn() {
   const [isOpenSnackBar, setIsOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("")
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
     try {
+      setIsLoading(true)
       const res = await login(name, password);
       localStorage.setItem(UserConstant, JSON.stringify(res.user))
       localStorage.setItem(TokenConstant, `${res.type} ${res.token}`)
+      setIsLoading(false)
       navigate('shopping')
     } catch (errorMessage: any) {
       setSnackbarMessage(errorMessage)
       setIsOpenSnackbar(true)
+      setIsLoading(false)
     }
   };
 
@@ -65,8 +70,15 @@ export function SignIn() {
               autoComplete="current-password"
             />
 
-            <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={handleSubmit}>
-              Entrar
+            <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} style={{height: 50}} onClick={handleSubmit}>
+              {isLoading && (
+                <CircularProgress color="warning" />
+              )}
+              {!isLoading && (
+                <>
+                  Entrar
+                </>
+              )}
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item >

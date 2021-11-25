@@ -54,25 +54,39 @@ export function Shopping() {
         <Container sx={{ py: 8 }} maxWidth="md">
           <Grid container spacing={4}>
             {nfts.map((nft) => (
-              <Grid item key={nft.Id} xs={12} sm={6} md={4}>
+              <Grid item key={nft.id} xs={12} sm={8} md={4}>
                 <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }} >
                   <CardMedia
+                    style={{ width: "210px", height: "300px", margin: '0 auto 0' }}
                     component="img"
-                    image={nft.ImageUrl}
+                    image={nft.imageUrl}
                     alt="random"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
+                    <Typography gutterBottom variant="h5" component="h2" style={{ fontSize: 16 }}>
+                      Id: {nft.id}
                     </Typography>
                     <Typography>
-                      This is a media card.You can use this section to describe the
-                      content.
+                      Vida: {nft.health}
+                    </Typography>
+                    <Typography>
+                      Ataque: {nft.attack}
+                    </Typography>
+                    <Typography>
+                      Defesa: {nft.defence}
+                    </Typography>
+                    <Typography>
+                      Tipo: {nft.type}
+                    </Typography>
+                    <Typography>
+                      IdDono: {nft.idOwner ?? " - "}
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
-                    <Button size="small">Edit</Button>
+                    {nft.idOwner == null ?
+                      (<Button size="small">Comprar</Button>)
+                      :
+                      (<Button size="small">Negociar</Button>)}
                   </CardActions>
                 </Card>
               </Grid>
