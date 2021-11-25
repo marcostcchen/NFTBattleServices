@@ -2211,6 +2211,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-loading-overlay@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/react-loading-overlay/-/react-loading-overlay-1.0.0.tgz#afe2c6aeb2c00d726001208d4d697e3a2cea041e"
+  integrity sha512-hSWL7z2viHV2zfyDwGdMlVLmqo/fm9io3LF6eE1Db26e7pCpspP2VX5gY2zE/OwUZvj+pYX6kUAL6alFUFbBLQ==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-transition-group@^4.2.0", "@types/react-transition-group@^4.4.4":
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/@types/react-transition-group/-/react-transition-group-4.4.4.tgz#acd4cceaa2be6b757db61ed7b432e103242d163e"
