@@ -49,7 +49,7 @@ export function Shopping() {
 
   return (
     <>
-      <PersistentDrawerLeft screenName="Mercado NFT">
+      <PersistentDrawerLeft screenName="Loja NFT">
         <main>
           <Box sx={{ bgcolor: 'background.paper', pt: 4, pb: 0, }}>
             <Container maxWidth="sm">

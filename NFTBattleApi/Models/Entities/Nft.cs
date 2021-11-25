@@ -14,5 +14,6 @@ namespace NFTBattleApi.Models
         public int? Attack { get; set; }
         public int? Defence { get; set; }
         public string? IdOwner { get; set; } = null;
+        public string? ImageUrl { get; set; }
     }
 }

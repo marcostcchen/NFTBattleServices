@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NFTBattleApi.Models;
 using NFTBattleApi.Services;
@@ -21,6 +23,7 @@ namespace NFTBattleApi.Controllers
             _userService = userService;
         }
 
+        [Authorize]
         [HttpPost]
         [Route("BuyNft")]
         public ActionResult<BuyNftResponse> BuyNft(BuyNftRequest request)
@@ -47,6 +50,25 @@ namespace NFTBattleApi.Controllers
                     user = user
                 };
                 return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult<List<Nft>> Get()
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var idUser = identity.FindFirst(ClaimTypes.Sid).Value;
+
+                var nfts = _userService.GetUserNft(idUser);
+
+                return Ok(nfts);
             }
             catch (Exception ex)
             {

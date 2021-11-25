@@ -26,7 +26,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Version = "v1",
         Title = "NFT Battle API",
-        Description = "Trabalho de Sistemas Interativos da Escola Polit�cnica de S�o Paulo",
+        Description = "Trabalho de Sistemas Interativos da Escola Politecnica de Sao Paulo",
         Contact = new OpenApiContact
         {
             Name = "Github",
@@ -37,7 +37,7 @@ builder.Services.AddSwaggerGen(c =>
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description =
-            @"Autoriza��o Bearer. Insira 'Bearer' [espa�o] em seguida o token de acesso. Exemplo: 'Bearer 12345abcdef'",
+            @"Exemplo: 'Bearer 12345abcdef'",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,

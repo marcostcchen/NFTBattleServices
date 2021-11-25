@@ -27,7 +27,7 @@ namespace NFTBattleApi.Controllers
             try
             {
                 var user = _userService.GetUser(id);
-                if (user == null) return BadRequest("Usu�rio n�o encontrado!");
+                if (user == null) return BadRequest("Usuario nao encontrado!");
 
                 return Ok(user);
             }
@@ -38,8 +38,8 @@ namespace NFTBattleApi.Controllers
         }
 
 
-        /// <response code="201">Usu�rio criado</response>
-        /// <response code="400">Faltando par�metros</response>
+        /// <response code="201">Usuario criado</response>
+        /// <response code="400">Faltando parametros</response>
         [AllowAnonymous]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -48,9 +48,9 @@ namespace NFTBattleApi.Controllers
         {
             try
             {
-                if (string.IsNullOrEmpty(request.Name)) throw new Exception("Campo Name est� vazio!");
-                if (string.IsNullOrEmpty(request.Password)) throw new Exception("Campo Password est� vazio!");
-                if (string.IsNullOrEmpty(request.WalletId)) throw new Exception("Campo WalletId est� vazio!");
+                if (string.IsNullOrEmpty(request.Name)) throw new Exception("Campo Name esta vazio!");
+                if (string.IsNullOrEmpty(request.Password)) throw new Exception("Campo Password esta vazio!");
+                if (string.IsNullOrEmpty(request.WalletId)) throw new Exception("Campo WalletId esta vazio!");
 
                 var findExistingUser = _userService.GetByName(request.Name);
                 if (findExistingUser is not null) throw new Exception("Usuário já existente!");

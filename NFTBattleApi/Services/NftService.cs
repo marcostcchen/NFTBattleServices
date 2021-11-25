@@ -32,8 +32,14 @@ namespace NFTBattleApi.Services
             return nfts;
         }
 
-        
-        public Nft CreateNft(string name, string type, int health, int attack, int defence)
+        public IEnumerable<Nft> GetAllNftNoOwner()
+        {
+            var nfts = _nft.Find(n => n.IdOwner == null).ToList() ?? new List<Nft>();
+            return nfts;
+        }
+
+
+        public Nft CreateNft(string name, string type, int health, int attack, int defence, string imageUrl)
         {
             var nft = new Nft()
             {
@@ -44,6 +50,7 @@ namespace NFTBattleApi.Services
                 Attack = attack,
                 Defence = defence,
                 IdOwner = null,
+                ImageUrl = imageUrl,
             };
 
             _nft.InsertOne(nft);

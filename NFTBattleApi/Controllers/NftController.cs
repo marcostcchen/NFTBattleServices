@@ -9,7 +9,6 @@ using NFTBattleApi.Services;
 namespace NFTBattleApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     [Produces("application/json")]
     public class NftController : ControllerBase
     {
@@ -20,8 +19,9 @@ namespace NFTBattleApi.Controllers
             _nftService = nftService;
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpGet]
+        [Route("/nfts")]
         public ActionResult<IEnumerable<Nft>> Get()
         {
             var nfts = _nftService.GetAllNft();
@@ -29,18 +29,19 @@ namespace NFTBattleApi.Controllers
         }
 
         [HttpPost]
+        [Route("/nft")]
         public ActionResult<Nft> Post(NftRequest request)
         {
             try
             {
-                if (request.Name is null) throw new Exception("Campo Name est� vazio!");
-                if (request.Type is null) throw new Exception("Campo Type est� vazio!");
-                if (request.Health is null) throw new Exception("Campo Health est� vazio!");
-                if (request.Attack is null) throw new Exception("Campo Attack est� vazio!");
-                if (request.Defence is null) throw new Exception("Campo Defence est� vazio!");
+                if (request.Name is null) throw new Exception("Campo Name esta vazio!");
+                if (request.Type is null) throw new Exception("Campo Type esta vazio!");
+                if (request.Health is null) throw new Exception("Campo Health esta vazio!");
+                if (request.Attack is null) throw new Exception("Campo Attack esta vazio!");
+                if (request.Defence is null) throw new Exception("Campo Defence esta vazio!");
 
                 var nft = _nftService.CreateNft(request.Name, request.Type, (int) request.Health, (int) request.Attack,
-                    (int) request.Defence);
+                    (int) request.Defence, request.imageUrl);
                 return Ok(nft);
             }
             catch (Exception ex)
@@ -50,16 +51,18 @@ namespace NFTBattleApi.Controllers
         }
 
         [HttpPut]
+        [Route("/nft")]
         public ActionResult<Nft> Put(Nft request)
         {
             try
             {
-                if (request.Id is null) throw new Exception("Campo Id est� vazio!");
-                if (request.Name is null) throw new Exception("Campo Name est� vazio!");
-                if (request.Type is null) throw new Exception("Campo Type est� vazio!");
-                if (request.Health is null) throw new Exception("Campo Health est� vazio!");
-                if (request.Attack is null) throw new Exception("Campo Attack est� vazio!");
-                if (request.Defence is null) throw new Exception("Campo Defence est� vazio!");
+                if (request.Id is null) throw new Exception("Campo Id esta vazio!");
+                if (request.Name is null) throw new Exception("Campo Name esta vazio!");
+                if (request.Type is null) throw new Exception("Campo Type esta vazio!");
+                if (request.Health is null) throw new Exception("Campo Health esta vazio!");
+                if (request.Attack is null) throw new Exception("Campo Attack esta vazio!");
+                if (request.Defence is null) throw new Exception("Campo Defence esta vazio!");
+                if (request.ImageUrl is null) throw new Exception("Campo Defence esta vazio!");
 
                 var nft = _nftService.UpdateNft(request);
                 return Ok(nft);

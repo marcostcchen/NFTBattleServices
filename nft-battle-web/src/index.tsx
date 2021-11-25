@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route, } from "react-router-dom";
-import { Home, Shopping, SignIn, SignUp } from './routes';
+import { MeusNfts, Shopping, SignIn, SignUp } from './routes';
 
 ReactDOM.render(
   <BrowserRouter>
@@ -10,7 +10,7 @@ ReactDOM.render(
     <Routes>
       <Route path="/" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/home" element={<Home />} />
+      <Route path="/meusnfts" element={<MeusNfts />} />
       <Route path="/shopping" element={<Shopping />} />
     </Routes>
   </BrowserRouter>,

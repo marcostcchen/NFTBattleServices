@@ -57,3 +57,23 @@ export const getNfts = async (): Promise<Array<Nft>> => {
     }
   })
 }
+
+
+export const getUserNfts = async (): Promise<Array<Nft>> => {
+  return new Promise(async (resolve, reject) => {
+    const config: AxiosRequestConfig<any> = {
+      headers: {
+        'Authorization': await localStorage.getItem(TokenConstant) ?? "",
+        'Content-Type': 'application/json',
+      }
+    }
+
+    try {
+      const { data } = await axios.get<Array<Nft>>(`${urlApi}/usernft`, config)
+      resolve(data);
+    } catch (error: any) {
+      const { response } = error;
+      reject(response.data)
+    }
+  })
+}

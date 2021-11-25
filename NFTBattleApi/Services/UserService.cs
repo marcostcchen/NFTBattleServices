@@ -30,7 +30,7 @@ namespace NFTBattleApi.Services
             user.Password = null;
             return user;
         }
-        
+
         public User? GetByName(string Name)
         {
             var user = _user.Find(user => user.Name == Name).FirstOrDefault();
@@ -56,6 +56,12 @@ namespace NFTBattleApi.Services
             if (user is null) throw new Exception("Usuário está vazio!");
             _user.ReplaceOne(u => u.Id == user.Id, user);
             return user;
+        }
+
+        public List<Nft> GetUserNft(string idUser)
+        {
+            var user = _user.Find(u => u.Id == idUser).FirstOrDefault();
+            return user.Nfts?.ToList() ?? new List<Nft>();
         }
     }
 }
