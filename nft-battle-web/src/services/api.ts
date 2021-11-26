@@ -100,3 +100,27 @@ export const fetchBuyNft = async (idNft: string): Promise<Nft> => {
     }
   })
 }
+
+
+export const fetchSellNft = async (idNft: string): Promise<Nft> => {
+  return new Promise(async (resolve, reject) => {
+    const params = {
+      idNft
+    }
+
+    const config: AxiosRequestConfig<any> = {
+      headers: {
+        'Authorization': await localStorage.getItem(TokenConstant) ?? "",
+        'Content-Type': 'application/json',
+      }
+    }
+
+    try {
+      const { data } = await axios.post<Nft>(`${urlApi}/usernft/sellnft`, params, config)
+      resolve(data);
+    } catch (error: any) {
+      const { response } = error;
+      reject(response.data)
+    }
+  })
+}

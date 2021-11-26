@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useEffect, useState } from 'react';
 import { Nft } from '../models';
-import { getUserNfts } from '../services/api';
+import { fetchSellNft, getUserNfts } from '../services/api';
 import { Backdrop, CircularProgress, ListItemButton, ListItemText, Modal, Snackbar } from '@mui/material';
 
 export function MeusNfts() {
@@ -52,8 +52,24 @@ export function MeusNfts() {
     setIsSellModalOpen(true);
   }
 
-  const sellNft = () => {
+  const sellNft = async () => {
+    setIsLoading(true);
+    setIsSellModalOpen(false);
+    setLoadingText("Vendendo NFT...")
 
+    try {
+      const nft = await fetchSellNft(idNftToSell);
+      
+      setIsLoading(true);
+      setSnackbarMessage("NFT vendido com sucesso!")
+      setIsOpenSnackbar(true);
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000)
+    } catch (errorMessage: any) {
+      setSnackbarMessage(errorMessage)
+      setIsOpenSnackbar(true)
+    }
   }
 
   return (
@@ -91,8 +107,8 @@ export function MeusNfts() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" onClick={() => showTransferModal()}>Negociar</Button>
-                    <Button size="small" onClick={() => showConfirmSellModal(nft.id)}>Comprar</Button>
+                    <Button size="small" onClick={() => showTransferModal()}>Transferir</Button>
+                    <Button size="small" onClick={() => showConfirmSellModal(nft.id)}>Vender para Loja</Button>
                   </CardActions>
                 </Card>
               </Grid>
