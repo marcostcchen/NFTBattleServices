@@ -2,6 +2,6 @@ namespace NFTBattleApi.Models
 {
     public class BuyNftRequest
     {
-        public string IdNft {get;set;}
+        public string idNft {get;set;}
     }
 }
