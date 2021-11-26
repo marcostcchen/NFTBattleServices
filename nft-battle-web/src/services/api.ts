@@ -15,7 +15,7 @@ export const login = async (name: string, password: string): Promise<ILoginRes> 
       resolve(data);
     } catch (error: any) {
       const { response } = error;
-      reject(response.data)
+      reject(response?.data ?? "Erro")
     }
   })
 }
@@ -33,7 +33,7 @@ export const createUser = async (name: string, password: string, walletId: strin
       resolve(data);
     } catch (error: any) {
       const { response } = error;
-      reject(response.data)
+      reject(response?.data ?? "Erro")
     }
   })
 }
@@ -53,7 +53,7 @@ export const getNfts = async (): Promise<Array<Nft>> => {
       resolve(data);
     } catch (error: any) {
       const { response } = error;
-      reject(response.data)
+      reject(response?.data ?? "Erro")
     }
   })
 }

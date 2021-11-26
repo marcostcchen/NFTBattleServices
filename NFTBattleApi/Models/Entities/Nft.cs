@@ -13,7 +13,7 @@ namespace NFTBattleApi.Models
         public int? Health { get; set; }
         public int? Attack { get; set; }
         public int? Defence { get; set; }
-        public string? IdOwner { get; set; } = null;
+        public Owner? Owner { get; set; } = null;
         public string? ImageUrl { get; set; }
     }
 }

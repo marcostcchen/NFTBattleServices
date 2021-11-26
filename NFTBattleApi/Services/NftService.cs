@@ -34,7 +34,7 @@ namespace NFTBattleApi.Services
 
         public IEnumerable<Nft> GetAllNftNoOwner()
         {
-            var nfts = _nft.Find(n => n.IdOwner == null).ToList() ?? new List<Nft>();
+            var nfts = _nft.Find(n => n.Owner == null).ToList() ?? new List<Nft>();
             return nfts;
         }
 
@@ -49,7 +49,7 @@ namespace NFTBattleApi.Services
                 Health = health,
                 Attack = attack,
                 Defence = defence,
-                IdOwner = null,
+                Owner = null,
                 ImageUrl = imageUrl,
             };
 

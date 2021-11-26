@@ -30,19 +30,27 @@ namespace NFTBattleApi.Controllers
         {
             try
             {
-                if (request.IdUser is null) throw new Exception("Campo IdUser está vazio!");
                 if (request.IdNft is null) throw new Exception("Campo IdNft está vazio!");
 
-                var user = _userService.GetUser(request.IdUser);
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var idUser = identity.FindFirst(ClaimTypes.Sid).Value;
+
+                var user = _userService.GetUser(idUser);
                 var nft = _nftService.GetNft(request.IdNft);
 
-                var userNfts = user.Nfts?.ToList() ?? new List<Nft>();
+                if (user.Nfts is null) user.Nfts = new List<Nft>();
+                user.Nfts.Add(nft);
 
-                userNfts.Add(nft);
-                nft.IdOwner = user.Id;
+                nft.Owner = new Owner()
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                };
 
                 _userService.UpdateUser(user);
                 _nftService.UpdateNft(nft);
+
+                user.Password = null;
 
                 var response = new BuyNftResponse()
                 {
