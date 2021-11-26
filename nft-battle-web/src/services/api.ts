@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios"
 import { Nft, User } from "../models";
 import { TokenConstant, urlApi } from '../utils';
-import { ILoginRes } from "./apiInterfaces";
+import { IBuyNftResponse, ILoginRes } from "./apiInterfaces";
 
 export const login = async (name: string, password: string): Promise<ILoginRes> => {
   return new Promise(async (resolve, reject) => {
@@ -71,6 +71,29 @@ export const getUserNfts = async (): Promise<Array<Nft>> => {
     try {
       const { data } = await axios.get<Array<Nft>>(`${urlApi}/usernft`, config)
       resolve(data);
+    } catch (error: any) {
+      const { response } = error;
+      reject(response.data)
+    }
+  })
+}
+
+export const fetchBuyNft = async (idNft: string): Promise<Nft> => {
+  return new Promise(async (resolve, reject) => {
+    const params = {
+      idNft
+    }
+
+    const config: AxiosRequestConfig<any> = {
+      headers: {
+        'Authorization': await localStorage.getItem(TokenConstant) ?? "",
+        'Content-Type': 'application/json',
+      }
+    }
+
+    try {
+      const { data } = await axios.post<IBuyNftResponse>(`${urlApi}/usernft/buynft`, params, config)
+      resolve(data.nft);
     } catch (error: any) {
       const { response } = error;
       reject(response.data)

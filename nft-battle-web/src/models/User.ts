@@ -1,9 +1,9 @@
-import { Nft } from "./Nft";
+import { Owner } from "./Owner";
 
 export interface User {
-    Id: string,
-    Name: string,
-    Password: string,
-    WalletId: string,
-    Nfts: Array<Nft>
+    id: string,
+    name: string,
+    password: string,
+    walletId: string,
+    nfts: Array<Owner>
 }

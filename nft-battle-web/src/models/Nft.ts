@@ -1,3 +1,5 @@
+import { Owner } from "./Owner";
+
 export interface Nft {
     id: string,
     name: string,
@@ -5,6 +7,6 @@ export interface Nft {
     health: number,
     attack: number,
     defence: number,
-    idOwner: string,
+    owner: Owner,
     imageUrl: string
 }

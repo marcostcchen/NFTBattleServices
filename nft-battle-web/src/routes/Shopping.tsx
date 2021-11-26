@@ -9,19 +9,22 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import PersistentDrawerLeft from '../components/PersistentDrawerLeft';
 import { useEffect, useState } from 'react';
-import { getNfts } from '../services/api';
+import { fetchBuyNft, getNfts } from '../services/api';
 import { Snackbar, Backdrop, CircularProgress } from '@mui/material';
 import Modal from '@mui/material/Modal';
-import { Nft } from '../models';
+import { Nft, Owner } from '../models';
 
 export function Shopping() {
   const [isOpenSnackBar, setIsOpenSnackbar] = useState(false);
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
+  const [isShowNegociateModal, setIsShowNegociateModal] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
   const [buyIdNft, setBuyIdNft] = useState("");
   const [nfts, setNfts] = useState<Array<Nft>>([])
   const [snackbarMessage, setSnackbarMessage] = useState("")
+
+  const [negociateOwner, setNegociateOwner] = useState<Owner>({ id: "1234", name: " - " })
 
   useEffect(() => {
     fetchNfts();
@@ -42,9 +45,23 @@ export function Shopping() {
     setIsBuyModalOpen(true)
   }
 
-  const buyNft = () => {
-    setIsBuyModalOpen(false)
+  const buyNft = async () => {
+    setIsBuyModalOpen(false);
     setIsLoading(true)
+    try {
+      const nft = await fetchBuyNft(buyIdNft);
+      setIsLoading(false);
+      window.location.reload();
+    } catch (errorMessage: any) {
+      setIsLoading(false);
+      setSnackbarMessage(errorMessage)
+      setIsOpenSnackbar(true)
+    }
+  }
+
+  const showNegociateModal = (owner: Owner) => {
+    setNegociateOwner(owner);
+    setIsShowNegociateModal(true);
   }
 
   return (
@@ -95,14 +112,14 @@ export function Shopping() {
                         Tipo: {nft.type}
                       </Typography>
                       <Typography>
-                        IdDono: {nft.idOwner ?? " - "}
+                        Dono: {nft.owner?.name ?? " - "}
                       </Typography>
                     </CardContent>
                     <CardActions>
-                      {nft.idOwner == null ?
-                        (<Button size="small" onClick={() => showConfirmBuyNft(nft.id)}>Comprar</Button>)
+                      {nft.owner ?
+                        (<Button size="small" onClick={() => showNegociateModal(nft.owner)}>Negociar</Button>)
                         :
-                        (<Button size="small">Negociar</Button>)}
+                        (<Button size="small" onClick={() => showConfirmBuyNft(nft.id)}>Comprar</Button>)}
                     </CardActions>
                   </Card>
                 </Grid>
@@ -132,6 +149,25 @@ export function Shopping() {
             </Box>
           </Modal>
 
+          <Modal
+            open={isShowNegociateModal}
+            onClose={() => setIsShowNegociateModal(false)}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={modalStyle}>
+              <Typography id="modal-modal-title" variant="h6" component="h3" style={{ marginBottom: 10 }}>
+                Entre em contato com o dono para negociar. Em seguida o dono poderá transferir para você.
+              </Typography>
+              <Typography>
+                Nome: {negociateOwner?.name ?? " - "}
+              </Typography>
+              <Typography>
+                Telefone: "(11) 1234-5678"
+              </Typography>
+            </Box>
+          </Modal>
+
         </main>
       </PersistentDrawerLeft>
       <Backdrop
@@ -139,8 +175,8 @@ export function Shopping() {
         open={isLoading}
         onClick={() => setIsLoading(false)}
       >
-        <div style={{textAlign:'center'}}>
-          <CircularProgress color="inherit"/>
+        <div style={{ textAlign: 'center' }}>
+          <CircularProgress color="inherit" />
           <p>Efetuando a compra...</p>
         </div>
       </Backdrop>
