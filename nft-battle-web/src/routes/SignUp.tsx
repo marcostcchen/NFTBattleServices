@@ -30,7 +30,7 @@ export function SignUp() {
   const handleSubmit = async () => {
     try {
       setIsLoading(true)
-      const user = await createUser(name.trim().toLocaleLowerCase(), password.trim().toLocaleLowerCase(), walletId.trim().toLocaleLowerCase());
+      const user = await createUser(name.trim(), password.trim(), walletId.trim());
       setSnackbarMessage("Usuário cadastrado com sucesso!");
       setIsOpenSnackbar(true);
       setTimeout(() => {
