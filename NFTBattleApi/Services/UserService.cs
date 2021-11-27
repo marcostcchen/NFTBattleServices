@@ -36,6 +36,12 @@ namespace NFTBattleApi.Services
             return user;
         }
 
+        public List<User> GetUsers()
+        {
+            var users = _user.Find(user => true).ToList();
+            return users;
+        }
+
         public User CreateUser(string Name, string Password, string WalletId)
         {
             var user = new User()

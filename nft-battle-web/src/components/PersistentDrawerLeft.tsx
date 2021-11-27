@@ -17,6 +17,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import PaymentIcon from '@mui/icons-material/Payment';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import { useNavigate } from 'react-router';
 
 const drawerWidth = 240;
@@ -145,6 +146,16 @@ export default function PersistentDrawerLeft(props: Props) {
             <ListItemText primary={"Meus NFTs"} />
           </ListItem>
         </List>
+
+        <List>
+          <ListItem button onClick={() => navigate("/")}>
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary={"Logout"} />
+          </ListItem>
+        </List>
+
 
       </Drawer>
       <Main open={open}>

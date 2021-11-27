@@ -83,7 +83,8 @@ namespace NFTBattleApi.Controllers
 
                 if (user is null) throw new Exception("Usuário não encontrado!");
 
-                user.Nfts.Remove(nft);
+                var userNft = user.Nfts.Find(n => n.Id == nft.Id);
+                user.Nfts.Remove(userNft);
                 nft.Owner = null;
 
                 _userService.UpdateUser(user);
@@ -115,11 +116,12 @@ namespace NFTBattleApi.Controllers
                 var toUser = _userService.GetUser(request.idTransferUser);
                 var nft = _nftService.GetNft(request.idNft);
 
-                if (fromUser is not null && toUser is not null) throw new Exception("Usuarios não encontrados!");
+                if (fromUser is null || toUser is null) throw new Exception("Usuarios não encontrados!");
                 if (toUser.Nfts is null) toUser.Nfts = new List<Nft>();
 
-                fromUser.Nfts.Remove(nft);
-                toUser.Nfts.Add(nft);
+                var nftTransfer = fromUser.Nfts.Find(n => n.Id == request.idNft);
+                fromUser.Nfts.Remove(nftTransfer);
+                toUser.Nfts.Add(nftTransfer);
                 nft.Owner = new Owner
                 {
                     Id = toUser.Id,

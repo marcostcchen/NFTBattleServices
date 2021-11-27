@@ -9,8 +9,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useEffect, useState } from 'react';
-import { Nft } from '../models';
-import { fetchSellNft, getUserNfts } from '../services/api';
+import { Nft, User } from '../models';
+import { fetchSellNft, fetchTransferNft, getUserNfts, getUsers } from '../services/api';
 import { Backdrop, CircularProgress, ListItemButton, ListItemText, Modal, Snackbar } from '@mui/material';
 
 export function MeusNfts() {
@@ -19,10 +19,12 @@ export function MeusNfts() {
   const [isTransferModalOpen, setIsTransferModalOpen] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [nfts, setNfts] = useState<Array<Nft>>([])
+  const [nfts, setNfts] = useState<Array<Nft>>([]);
+  const [users, setUsers] = useState<Array<User>>([]);
   const [snackbarMessage, setSnackbarMessage] = useState("")
 
   const [idNftToSell, setIdNftToSell] = useState("");
+  const [idNftToTransfer, setIdNftToTransfer] = useState("");
 
   const [loadingText, setLoadingText] = useState("");
 
@@ -40,11 +42,16 @@ export function MeusNfts() {
     }
   }
 
-  const showTransferModal = async () => {
+  const showTransferModal = async (idNft: string) => {
     setIsLoading(true);
     setLoadingText("Carregando usuários...")
-    //carrega usuarios,
-    //mostra modal com opcoes
+    setIdNftToTransfer(idNft)
+
+    const users = await getUsers(true);
+    setUsers(users);
+
+    setIsLoading(false);
+    setIsTransferModalOpen(true);
   }
 
   const showConfirmSellModal = (idNft: string) => {
@@ -59,17 +66,37 @@ export function MeusNfts() {
 
     try {
       const nft = await fetchSellNft(idNftToSell);
-      
-      setIsLoading(true);
+
+      setIsLoading(false);
       setSnackbarMessage("NFT vendido com sucesso!")
       setIsOpenSnackbar(true);
       setTimeout(() => {
         window.location.reload();
-      }, 2000)
+      }, 1000)
     } catch (errorMessage: any) {
       setSnackbarMessage(errorMessage)
       setIsOpenSnackbar(true)
     }
+  }
+
+  const transferToUser = async (idTransferUser: string) => {
+    setIsLoading(true);
+    setLoadingText("Tranferindo NFT...");
+    setIsTransferModalOpen(false);
+
+    try {
+      const nft = await fetchTransferNft(idNftToTransfer, idTransferUser);
+      setIsLoading(false);
+      setSnackbarMessage("NFT Transferido com sucesso!")
+      setIsOpenSnackbar(true)
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000)
+    } catch (errorMessage: any) {
+      setSnackbarMessage(errorMessage)
+      setIsOpenSnackbar(true)
+    }
+
   }
 
   return (
@@ -107,7 +134,7 @@ export function MeusNfts() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" onClick={() => showTransferModal()}>Transferir</Button>
+                    <Button size="small" onClick={() => showTransferModal(nft.id)}>Transferir</Button>
                     <Button size="small" onClick={() => showConfirmSellModal(nft.id)}>Vender para Loja</Button>
                   </CardActions>
                 </Card>
@@ -127,9 +154,15 @@ export function MeusNfts() {
               Selecione quem deseja transferir o NFT
             </Typography>
 
-            <ListItemButton component="a" href="#simple-list">
-              <ListItemText primary="Spam" />
-            </ListItemButton>
+            {users.length == 0 && (
+              <p>Nao há usuários</p>
+            )}
+
+            {users.map((user) => (
+              <ListItemButton key={user.id} component="a" href="#simple-list" onClick={() => transferToUser(user.id)}>
+                <ListItemText primary={user.name} />
+              </ListItemButton>
+            ))}
           </Box>
         </Modal>
 

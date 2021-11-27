@@ -1,4 +1,5 @@
 using System;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +9,6 @@ using NFTBattleApi.Services;
 namespace NFTBattleApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     [Produces("application/json")]
     public class UserController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace NFTBattleApi.Controllers
 
         [Authorize]
         [HttpGet]
-        [Route("{id}")]
+        [Route("user/{id}")]
         public ActionResult<User> Get(string id)
         {
             try
@@ -37,11 +37,46 @@ namespace NFTBattleApi.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet]
+        [Route("/users")]
+        public ActionResult<List<User>> GetUsers(bool othersUsers)
+        {
+
+            try
+            {
+
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var idUser = identity.FindFirst(ClaimTypes.Sid).Value;
+
+                var users = _userService.GetUsers();
+
+                if(othersUsers)
+                {
+                    var user = users.Find(u => u.Id == idUser);
+                    users.Remove(user);
+                }
+
+                users.ForEach(u =>
+                {
+                    u.Password = null;
+                    u.Nfts = null;
+                    u.WalletId = null;
+                });
+                return users;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         /// <response code="201">Usuario criado</response>
         /// <response code="400">Faltando parametros</response>
         [AllowAnonymous]
         [HttpPost]
+        [Route("/user")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<User> Post(CreateUserRequest request)
