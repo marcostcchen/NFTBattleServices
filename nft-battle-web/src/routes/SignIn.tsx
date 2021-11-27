@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -82,9 +81,9 @@ export function SignIn() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item >
-                <Link href="/signup" variant="body2">
-                  {"Cadastrar"}
-                </Link>
+                <Button onClick={() => navigate("SignUp")} >
+                  Cadastrar
+                </Button>
               </Grid>
             </Grid>
           </Box>

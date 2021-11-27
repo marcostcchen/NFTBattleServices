@@ -95,12 +95,12 @@ export function SignUp() {
             <Button
               fullWidth
               variant="contained"
-              style={{height: 50}}
-              sx={{ mt: 3, mb: 2,  }}
+              style={{ height: 50 }}
+              sx={{ mt: 3, mb: 2, }}
               onClick={handleSubmit}
             >
               {isLoading && (
-                <CircularProgress color="warning"/>
+                <CircularProgress color="warning" />
               )}
               {!isLoading && (
                 <>
@@ -110,9 +110,9 @@ export function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/" variant="body2">
+                <Button onClick={() => navigate("/")} >
                   Entrar
-                </Link>
+                </Button>
               </Grid>
             </Grid>
           </Box>
