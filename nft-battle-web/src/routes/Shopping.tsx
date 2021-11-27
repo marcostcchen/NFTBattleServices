@@ -51,7 +51,7 @@ export function Shopping() {
     try {
       const nft = await fetchBuyNft(buyIdNft);
       setIsLoading(false);
-      window.location.reload();
+      await fetchNfts()
     } catch (errorMessage: any) {
       setIsLoading(false);
       setSnackbarMessage(errorMessage)

@@ -70,9 +70,7 @@ export function MeusNfts() {
       setIsLoading(false);
       setSnackbarMessage("NFT vendido com sucesso!")
       setIsOpenSnackbar(true);
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000)
+      fetchNfts();
     } catch (errorMessage: any) {
       setSnackbarMessage(errorMessage)
       setIsOpenSnackbar(true)
@@ -89,9 +87,7 @@ export function MeusNfts() {
       setIsLoading(false);
       setSnackbarMessage("NFT Transferido com sucesso!")
       setIsOpenSnackbar(true)
-      setTimeout(() => {
-        window.location.reload();
-      }, 1000)
+      fetchNfts();
     } catch (errorMessage: any) {
       setSnackbarMessage(errorMessage)
       setIsOpenSnackbar(true)
