@@ -51,6 +51,8 @@ export function Shopping() {
     try {
       const nft = await fetchBuyNft(buyIdNft);
       setIsLoading(false);
+      setSnackbarMessage("NFT comprado com sucesso!")
+      setIsOpenSnackbar(true)
       await fetchNfts()
     } catch (errorMessage: any) {
       setIsLoading(false);
