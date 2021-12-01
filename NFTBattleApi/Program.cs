@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NFTBattleApi.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,10 +72,15 @@ builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
 }));
 
 builder.Services.Configure<MongoCollectionSettings>(builder.Configuration.GetSection(nameof(MongoCollectionSettings)));
-builder.Services.AddSingleton<IMongoCollectionSettings>(sp =>
-    sp.GetRequiredService<IOptions<MongoCollectionSettings>>().Value);
+builder.Services.AddSingleton<IMongoCollectionSettings>(sp => sp.GetRequiredService<IOptions<MongoCollectionSettings>>().Value);
+
 builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection(nameof(TokenSettings)));
 builder.Services.AddSingleton<ITokenSettings>(sp => sp.GetRequiredService<IOptions<TokenSettings>>().Value);
+
+builder.Services.Configure<OpenSeaSettings>(builder.Configuration.GetSection(nameof(OpenSeaSettings)));
+builder.Services.AddSingleton<IOpenSeaSettings>(sp => sp.GetRequiredService<IOptions<OpenSeaSettings>>().Value);
+
+
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<TokenService>();
 builder.Services.AddSingleton<NftService>();
