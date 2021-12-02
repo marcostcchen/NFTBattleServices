@@ -1,0 +1,17 @@
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\bin\Release\net6.0\NftBattleOpenSea.exe
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\bin\Release\net6.0\NftBattleOpenSea.deps.json
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\bin\Release\net6.0\NftBattleOpenSea.runtimeconfig.json
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\bin\Release\net6.0\NftBattleOpenSea.dll
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\bin\Release\net6.0\ref\NftBattleOpenSea.dll
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\bin\Release\net6.0\NftBattleOpenSea.pdb
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\bin\Release\net6.0\MongoDB.Bson.dll
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\obj\Release\net6.0\NftBattleOpenSea.csproj.AssemblyReference.cache
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\obj\Release\net6.0\NftBattleOpenSea.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\obj\Release\net6.0\NftBattleOpenSea.AssemblyInfoInputs.cache
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\obj\Release\net6.0\NftBattleOpenSea.AssemblyInfo.cs
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\obj\Release\net6.0\NftBattleOpenSea.csproj.CoreCompileInputs.cache
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\obj\Release\net6.0\NftBattleOpenSea.csproj.CopyComplete
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\obj\Release\net6.0\NftBattleOpenSea.dll
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\obj\Release\net6.0\ref\NftBattleOpenSea.dll
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\obj\Release\net6.0\NftBattleOpenSea.pdb
+C:\Users\marco\source\repos\NFTBattleServices\NftBattleOpenSea\obj\Release\net6.0\NftBattleOpenSea.genruntimeconfig.cache

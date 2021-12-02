@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFTBattleApi", "NFTBattleAp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NFTBattleApi.Tests", "..\NFTBattleApi.Tests\NFTBattleApi.Tests.csproj", "{2AF46B38-7592-49AE-B5A0-66D9DAC78BCD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NftBattleOpenSea", "..\NftBattleOpenSea\NftBattleOpenSea.csproj", "{2390BCFB-65D7-4FD8-99A7-68929989436D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2AF46B38-7592-49AE-B5A0-66D9DAC78BCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AF46B38-7592-49AE-B5A0-66D9DAC78BCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AF46B38-7592-49AE-B5A0-66D9DAC78BCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2390BCFB-65D7-4FD8-99A7-68929989436D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2390BCFB-65D7-4FD8-99A7-68929989436D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2390BCFB-65D7-4FD8-99A7-68929989436D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2390BCFB-65D7-4FD8-99A7-68929989436D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
