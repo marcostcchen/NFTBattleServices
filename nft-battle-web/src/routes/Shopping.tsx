@@ -104,7 +104,10 @@ export function Shopping() {
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography gutterBottom variant="h5" component="h2" style={{ fontSize: 16 }}>
-                        Id: {nft.id}
+                        Id: {nft.token_id}
+                      </Typography>
+                      <Typography gutterBottom variant="h5" component="h2" style={{ fontSize: 16 }}>
+                        Nome: {nft.name}
                       </Typography>
                       <Typography>
                         Vida: {nft.health}
