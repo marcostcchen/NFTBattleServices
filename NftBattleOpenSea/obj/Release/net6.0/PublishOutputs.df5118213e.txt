@@ -1,6 +1,0 @@
-C:\Users\marco\Desktop\publish\NftBattleOpenSea.exe
-C:\Users\marco\Desktop\publish\NftBattleOpenSea.dll
-C:\Users\marco\Desktop\publish\NftBattleOpenSea.deps.json
-C:\Users\marco\Desktop\publish\NftBattleOpenSea.runtimeconfig.json
-C:\Users\marco\Desktop\publish\NftBattleOpenSea.pdb
-C:\Users\marco\Desktop\publish\MongoDB.Bson.dll
