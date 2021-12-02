@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Driver;
-using NFTBattleApi.Models;
+using NFTBattleApi.Models.Entities;
 using NFTBattleApi.Models.Settings;
 
 namespace NFTBattleApi.Services
@@ -38,23 +35,9 @@ namespace NFTBattleApi.Services
             return nfts;
         }
 
-
-        public Nft CreateNft(string name, string type, int health, int attack, int defence, string imageUrl)
+        public void CreateMultipleNfts(IEnumerable<Nft> nfts)
         {
-            var nft = new Nft()
-            {
-                Id = ObjectId.GenerateNewId().ToString(),
-                Name = name,
-                Type = type,
-                Health = health,
-                Attack = attack,
-                Defence = defence,
-                Owner = null,
-                ImageUrl = imageUrl,
-            };
-
-            _nft.InsertOne(nft);
-            return nft;
+            _nft.InsertMany(nfts);
         }
 
         public Nft UpdateNft(Nft nft)

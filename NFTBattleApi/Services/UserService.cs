@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using NFTBattleApi.Models;
+using NFTBattleApi.Models.Entities;
 using NFTBattleApi.Models.Settings;
 
 namespace NFTBattleApi.Services

@@ -1,9 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using NFTBattleApi.Models;
+using NFTBattleApi.Models.Entities;
 using NFTBattleApi.Services;
 
 namespace NFTBattleApi.Controllers
@@ -13,64 +10,29 @@ namespace NFTBattleApi.Controllers
     public class NftController : ControllerBase
     {
         private readonly NftService _nftService;
+        private readonly OpenSeaService _openSeaService;
 
-        public NftController(NftService nftService)
+
+        public NftController(NftService nftService, OpenSeaService openSeaService)
         {
             _nftService = nftService;
+            _openSeaService = openSeaService;
         }
 
         [Authorize]
         [HttpGet]
-        [Route("/nfts")]
-        public ActionResult<IEnumerable<Nft>> Get()
+        [Route("/nfts")]    
+        public async Task<ActionResult<List<Nft>>> Get()
         {
-            var nfts = _nftService.GetAllNft();
-            return Ok(nfts);
-        }
+            var nftsOpenSea = await _openSeaService.GetAssets();
+            var nftsMongo = _nftService.GetAllNft();
 
-        [HttpPost]
-        [Route("/nft")]
-        public ActionResult<Nft> Post(NftRequest request)
-        {
-            try
-            {
-                if (request.Name is null) throw new Exception("Campo Name esta vazio!");
-                if (request.Type is null) throw new Exception("Campo Type esta vazio!");
-                if (request.Health is null) throw new Exception("Campo Health esta vazio!");
-                if (request.Attack is null) throw new Exception("Campo Attack esta vazio!");
-                if (request.Defence is null) throw new Exception("Campo Defence esta vazio!");
+            var diffNfts = nftsOpenSea.Where(nftOpenSea => nftsMongo.All(nftMongo => nftOpenSea.Token_id != nftMongo.Token_id)).ToList();
+            //Se tiver novos nfts, atualizar no banco
+            if (diffNfts.Count != 0) _nftService.CreateMultipleNfts(diffNfts);
 
-                var nft = _nftService.CreateNft(request.Name, request.Type, (int) request.Health, (int) request.Attack,
-                    (int) request.Defence, request.imageUrl);
-                return Ok(nft);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpPut]
-        [Route("/nft")]
-        public ActionResult<Nft> Put(Nft request)
-        {
-            try
-            {
-                if (request.Id is null) throw new Exception("Campo Id esta vazio!");
-                if (request.Name is null) throw new Exception("Campo Name esta vazio!");
-                if (request.Type is null) throw new Exception("Campo Type esta vazio!");
-                if (request.Health is null) throw new Exception("Campo Health esta vazio!");
-                if (request.Attack is null) throw new Exception("Campo Attack esta vazio!");
-                if (request.Defence is null) throw new Exception("Campo Defence esta vazio!");
-                if (request.ImageUrl is null) throw new Exception("Campo Defence esta vazio!");
-
-                var nft = _nftService.UpdateNft(request);
-                return Ok(nft);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var nfts = _nftService.GetAllNft().ToList() ?? new List<Nft>();
+            return nfts;
         }
     }
 }

@@ -42,10 +42,8 @@ namespace NFTBattleApi.Controllers
         [Route("/users")]
         public ActionResult<List<User>> GetUsers(bool othersUsers)
         {
-
             try
             {
-
                 var identity = HttpContext.User.Identity as ClaimsIdentity;
                 var idUser = identity.FindFirst(ClaimTypes.Sid).Value;
 

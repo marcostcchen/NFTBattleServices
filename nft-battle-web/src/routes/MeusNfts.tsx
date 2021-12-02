@@ -103,14 +103,18 @@ export function MeusNfts() {
         </Typography>
         <Container sx={{ py: 6 }} maxWidth="md">
           <Grid container spacing={4}>
+            {nfts.length == 0 && (
+              <CircularProgress />
+            )}
+
             {nfts.map((nft) => (
               <Grid item key={nft.id} xs={12} sm={8} md={4}>
                 <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }} >
                   <CardMedia
-                    style={{ width: "210px", height: "300px", margin: '0 auto 0' }}
+                    style={{ width: "300px", height: "300px", margin: '0 auto 0' }}
                     component="img"
-                    image={nft.imageUrl}
-                    alt="random"
+                    image={nft.image_url}
+                    alt="Sem Imagem"
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2" style={{ fontSize: 16 }}>
@@ -124,9 +128,6 @@ export function MeusNfts() {
                     </Typography>
                     <Typography>
                       Defesa: {nft.defence}
-                    </Typography>
-                    <Typography>
-                      Tipo: {nft.type}
                     </Typography>
                   </CardContent>
                   <CardActions>

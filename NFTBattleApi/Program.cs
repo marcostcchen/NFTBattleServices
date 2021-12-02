@@ -84,6 +84,7 @@ builder.Services.AddSingleton<IOpenSeaSettings>(sp => sp.GetRequiredService<IOpt
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<TokenService>();
 builder.Services.AddSingleton<NftService>();
+builder.Services.AddSingleton<OpenSeaService>();
 builder.Services.AddAuthorization();
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
 {

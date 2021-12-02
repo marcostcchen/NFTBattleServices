@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace NFTBattleApi.Models
+namespace NFTBattleApi.Models.Entities
 {
     public class Owner
     {

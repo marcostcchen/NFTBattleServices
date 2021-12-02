@@ -1,3 +1,5 @@
+using NFTBattleApi.Models.Entities;
+
 namespace NFTBattleApi.Models
 {
     public class BuyNftResponse
