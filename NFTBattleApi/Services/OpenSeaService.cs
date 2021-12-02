@@ -1,4 +1,5 @@
-﻿using NFTBattleApi.Models.Entities;
+﻿using Microsoft.AspNetCore.Cors;
+using NFTBattleApi.Models.Entities;
 using NFTBattleApi.Models.Responses;
 using NFTBattleApi.Settings;
 using System.Text.Json;
@@ -8,23 +9,28 @@ namespace NFTBattleApi.Services
     public class OpenSeaService
     {
         private readonly IOpenSeaSettings _openSeaSettings;
-        public OpenSeaService(IOpenSeaSettings openSeaSettings)
+        private readonly LogService _logService;
+        public OpenSeaService(IOpenSeaSettings openSeaSettings, LogService logService)
         {
             _openSeaSettings = openSeaSettings;
+            _logService = logService;
         }
 
+        [EnableCors("_myAllowSpecificOrigins")]
         public async Task<List<Nft>> GetAssets()
         {
             using (var client = new HttpClient())
             {
+                _logService.Info(new Log() { values = "Get Assets In"});
+                client.Timeout = TimeSpan.FromSeconds(100);
                 client.BaseAddress = new Uri(_openSeaSettings.Url);
+
                 var parameters = "/assets?order_direction=desc&offset=0&limit=5&collection=ethermon";
-                var responseTask = client.GetAsync(parameters);
+                var result = await client.GetAsync(parameters).ConfigureAwait(false);
 
-                var result = responseTask.Result;
                 if (!result.IsSuccessStatusCode) throw new Exception(result.ReasonPhrase);
+                var content = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                var content = await result.Content.ReadAsStringAsync();
                 var serializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
                 var nftAssets = JsonSerializer.Deserialize<GetAssetResponse>(content, serializerOptions)?.Assets ?? new List<NftAsset>();
 

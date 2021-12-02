@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Cors;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using NFTBattleApi.Models.Entities;

@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using NFTBattleApi.Models.Entities;
 using NFTBattleApi.Services;
+using System.Text.Json;
 
 namespace NFTBattleApi.Controllers
 {
@@ -21,10 +23,11 @@ namespace NFTBattleApi.Controllers
 
         [Authorize]
         [HttpGet]
+        [EnableCors("_myAllowSpecificOrigins")]
         [Route("/nfts")]    
-        public async Task<ActionResult<List<Nft>>> Get()
+        public ActionResult<List<Nft>> Get()
         {
-            var nftsOpenSea = await _openSeaService.GetAssets();
+            var nftsOpenSea = _openSeaService.GetAssets();
             var nftsMongo = _nftService.GetAllNft();
 
             var diffNfts = nftsOpenSea.Where(nftOpenSea => nftsMongo.All(nftMongo => nftOpenSea.Token_id != nftMongo.Token_id)).ToList();

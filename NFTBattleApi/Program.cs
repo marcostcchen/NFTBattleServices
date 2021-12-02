@@ -1,6 +1,4 @@
-using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -8,13 +6,15 @@ using NFTBattleApi.Models;
 using NFTBattleApi.Models.Settings;
 using NFTBattleApi.Services;
 using System.Text;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Routing;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using NFTBattleApi.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins, builder => { builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
+});
 
 // Add services to the container.
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -64,12 +64,6 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
-builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-{
-    builder.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader();
-}));
 
 builder.Services.Configure<MongoCollectionSettings>(builder.Configuration.GetSection(nameof(MongoCollectionSettings)));
 builder.Services.AddSingleton<IMongoCollectionSettings>(sp => sp.GetRequiredService<IOptions<MongoCollectionSettings>>().Value);
@@ -80,7 +74,7 @@ builder.Services.AddSingleton<ITokenSettings>(sp => sp.GetRequiredService<IOptio
 builder.Services.Configure<OpenSeaSettings>(builder.Configuration.GetSection(nameof(OpenSeaSettings)));
 builder.Services.AddSingleton<IOpenSeaSettings>(sp => sp.GetRequiredService<IOptions<OpenSeaSettings>>().Value);
 
-
+builder.Services.AddSingleton<LogService>();
 builder.Services.AddSingleton<UserService>();
 builder.Services.AddSingleton<TokenService>();
 builder.Services.AddSingleton<NftService>();
@@ -100,7 +94,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
             new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["TokenSettings:JwtKey"]))
     };
 });
+
 var app = builder.Build();
+app.UseCors(MyAllowSpecificOrigins);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
@@ -113,10 +109,8 @@ if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
     });
 }
 
-app.UseCors("MyPolicy");
-app.UseAuthentication();
-app.UseAuthorization();
 app.UseHttpsRedirection();
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
