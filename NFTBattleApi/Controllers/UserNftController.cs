@@ -14,11 +14,34 @@ namespace NFTBattleApi.Controllers
     {
         private readonly NftService _nftService;
         private readonly UserService _userService;
+        private readonly OpenSeaService _openSeaService;
 
-        public UserNftController(NftService nftService, UserService userService)
+        public UserNftController(NftService nftService, UserService userService, OpenSeaService openSeaService)
         {
             _nftService = nftService;
             _userService = userService;
+            _openSeaService = openSeaService;
+        }
+
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<List<Nft>>> Get()
+        {
+            try
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var idUser = identity.FindFirst(ClaimTypes.Sid).Value;
+
+                var user = _userService.GetUser(idUser);
+                if (user is null) throw new Exception("Usuário não encontrado!");
+
+                var nfts = await _openSeaService.GetAssetsByOwner(user.WalletId);
+                return Ok(nfts);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Wallet não encontrado na Open Sea, verifique se foi realizado o cadastro corretamente!");
+            }
         }
 
         [Authorize]
@@ -137,26 +160,5 @@ namespace NFTBattleApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
-
-        [Authorize]
-        [HttpGet]
-        public ActionResult<List<Nft>> Get()
-        {
-            try
-            {
-                var identity = HttpContext.User.Identity as ClaimsIdentity;
-                var idUser = identity.FindFirst(ClaimTypes.Sid).Value;
-
-                var nfts = _userService.GetUserNft(idUser);
-
-                return Ok(nfts);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
     }
 }

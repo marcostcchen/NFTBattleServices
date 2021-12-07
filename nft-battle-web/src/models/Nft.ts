@@ -8,5 +8,6 @@ export interface Nft {
     attack: number,
     defence: number,
     owner: Owner,
-    image_url: string
+    image_url: string,
+    permaLink: string,
 }

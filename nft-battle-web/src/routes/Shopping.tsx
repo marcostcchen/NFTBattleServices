@@ -34,6 +34,7 @@ export function Shopping() {
     try {
       const nfts = await getNfts();
       setNfts(nfts)
+      console.log(nfts)
     } catch (errorMessage: any) {
       setSnackbarMessage(errorMessage)
       setIsOpenSnackbar(true)
@@ -66,6 +67,10 @@ export function Shopping() {
     setIsShowNegociateModal(true);
   }
 
+  const handleClickLink = (permaLink: string) => {
+    window.open(permaLink);
+  }
+
   return (
     <>
       <PersistentDrawerLeft screenName="Loja NFT">
@@ -89,7 +94,7 @@ export function Shopping() {
           <Container sx={{ py: 6 }} maxWidth="md">
             <Grid container spacing={4}>
               {nfts.length == 0 && (
-                <div style={{width: '100%', alignItems:'center', justifyContent:'center'}}>
+                <div style={{ width: '100%', alignItems: 'center', justifyContent: 'center' }}>
                   <CircularProgress />
                 </div>
               )}
@@ -104,9 +109,6 @@ export function Shopping() {
                     />
                     <CardContent sx={{ flexGrow: 1 }}>
                       <Typography gutterBottom variant="h5" component="h2" style={{ fontSize: 16 }}>
-                        Id: {nft.token_id}
-                      </Typography>
-                      <Typography gutterBottom variant="h5" component="h2" style={{ fontSize: 16 }}>
                         Nome: {nft.name}
                       </Typography>
                       <Typography>
@@ -118,15 +120,9 @@ export function Shopping() {
                       <Typography>
                         Defesa: {nft.defence}
                       </Typography>
-                      <Typography>
-                        Dono: {nft.owner?.name ?? " - "}
-                      </Typography>
                     </CardContent>
                     <CardActions>
-                      {nft.owner ?
-                        (<Button size="small" onClick={() => showNegociateModal(nft.owner)}>Negociar</Button>)
-                        :
-                        (<Button size="small" onClick={() => showConfirmBuyNft(nft.id)}>Comprar</Button>)}
+                      <Button size="small" onClick={() => handleClickLink(nft.permaLink)}>Link Open Sea</Button>
                     </CardActions>
                   </Card>
                 </Grid>

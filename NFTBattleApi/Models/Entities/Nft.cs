@@ -11,9 +11,10 @@ namespace NFTBattleApi.Models.Entities
         public string Token_id { get; set; }
         public string Image_url { get; set; }
         public string Name { get; set; }
-        public Owner Owner { get; set; }
+        public Owner? Owner { get; set; }
         public int Attack { get; set; }
         public int Defence { get; set; }
         public int Health { get; set; }
+        public string PermaLink { get; set; }
     }
 }

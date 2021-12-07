@@ -37,6 +37,7 @@ export function MeusNfts() {
       const nfts = await getUserNfts();
       setNfts(nfts)
     } catch (errorMessage: any) {
+      setIsLoading(false);
       setSnackbarMessage(errorMessage)
       setIsOpenSnackbar(true)
     }
@@ -72,6 +73,7 @@ export function MeusNfts() {
       setIsOpenSnackbar(true);
       fetchNfts();
     } catch (errorMessage: any) {
+      setIsLoading(false);
       setSnackbarMessage(errorMessage)
       setIsOpenSnackbar(true)
     }
@@ -92,7 +94,10 @@ export function MeusNfts() {
       setSnackbarMessage(errorMessage)
       setIsOpenSnackbar(true)
     }
+  }
 
+  const handleClickLink = (permaLink: string) => {
+    window.open(permaLink);
   }
 
   return (
@@ -103,7 +108,7 @@ export function MeusNfts() {
         </Typography>
         <Container sx={{ py: 6 }} maxWidth="md">
           <Grid container spacing={4}>
-            {nfts.length == 0 && (
+            {nfts.length == 0 || isLoading && (
               <CircularProgress />
             )}
 
@@ -118,9 +123,6 @@ export function MeusNfts() {
                   />
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2" style={{ fontSize: 16 }}>
-                      Id: {nft.token_id}
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="h2" style={{ fontSize: 16 }}>
                       Nome: {nft.name}
                     </Typography>
                     <Typography>
@@ -134,8 +136,7 @@ export function MeusNfts() {
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small" onClick={() => showTransferModal(nft.id)}>Transferir</Button>
-                    <Button size="small" onClick={() => showConfirmSellModal(nft.id)}>Vender para Loja</Button>
+                    <Button size="small" onClick={() => handleClickLink(nft.permaLink)}>Link Open Sea</Button>
                   </CardActions>
                 </Card>
               </Grid>

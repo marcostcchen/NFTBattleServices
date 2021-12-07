@@ -12,6 +12,7 @@ namespace NFTBattleApi.Models.Responses
         public string Image_url { get; set; }
         public string Name { get; set; }
         public string External_link { get; set; }
+        public string PermaLink { get; set; }
         public OpenSeaOwner? Owner { get; set; }
         public List<Traits> Traits { get; set; }
     }
