@@ -25,7 +25,7 @@ namespace NFTBattleApi.Services
                 client.Timeout = TimeSpan.FromSeconds(100);
                 client.BaseAddress = new Uri(_openSeaSettings.Url);
 
-                var parameters = "/assets?order_direction=desc&offset=0&limit=20&collection=teste-bitmonster";
+                var parameters = "/assets?order_direction=desc&offset=0&limit=20&collection=bitmonsters";
                 var result = await client.GetAsync(parameters).ConfigureAwait(false);
 
                 if (!result.IsSuccessStatusCode) throw new Exception(result.ReasonPhrase);
@@ -68,7 +68,7 @@ namespace NFTBattleApi.Services
                 client.Timeout = TimeSpan.FromSeconds(100);
                 client.BaseAddress = new Uri(_openSeaSettings.Url);
 
-                var parameters = $"/assets?owner={walletId}";
+                var parameters = $"/assets?collection=bitmonsters&owner={walletId}";
                 var result = await client.GetAsync(parameters).ConfigureAwait(false);
 
                 if (!result.IsSuccessStatusCode) throw new Exception();
